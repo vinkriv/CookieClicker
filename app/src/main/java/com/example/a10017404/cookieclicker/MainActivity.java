@@ -1,9 +1,11 @@
 package com.example.a10017404.cookieclicker;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
@@ -11,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class MainActivity extends AppCompatActivity {
     ImageView img;
     RelativeLayout relativeLayout;
     TextView plusone;
+    AtomicInteger score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,17 +28,46 @@ public class MainActivity extends AppCompatActivity {
         img = (ImageView)findViewById(R.id.cookie);
         img.setImageResource(R.drawable.cookie);
         relativeLayout = (RelativeLayout)findViewById(R.id.relative_layout);
-        plusone = (TextView)findViewById(R.id.plusone);
+        relativeLayout.setBackgroundColor(Color.YELLOW);
         final ScaleAnimation scaleAnimation =  new ScaleAnimation(1f, 0.95f, 1f, 0.95f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(50);
-        final TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,-10);
-        translateAnimation.setDuration(500);
+
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 img.startAnimation(scaleAnimation);
-                TextView plusone = new TextView(MainActivity.this);
+                final TextView plusone = new TextView(MainActivity.this);
+                plusone.setText("+1");
+                plusone.setTextColor(Color.BLACK);
+                plusone.setTextSize(30.0f);
+                int ltpad = (int)(Math.random()*30);
+                int rtpad = (int)(Math.random()*301);
+                plusone.setPadding(ltpad,0,rtpad,50);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.ABOVE,R.id.cookie);
+                params.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
+
+                TranslateAnimation translateAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,0,Animation.RELATIVE_TO_SELF,-10);
+                translateAnimation.setDuration(1500);
+
+                relativeLayout.addView(plusone,params);
                 plusone.startAnimation(translateAnimation);
+                translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        relativeLayout.removeView(plusone);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
             }
         });
 
