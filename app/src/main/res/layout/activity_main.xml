@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.a10017404.cookieclicker.MainActivity"
-    android:id="@+id/relative_layout">
+    android:id="@+id/relative_layout"
+    android:background="#e1ffc249">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -17,5 +18,25 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/cookie" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#ffaa00"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/cookies"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:textColor="#ffffff"
+        android:textSize="30dp" />
 
 </RelativeLayout>

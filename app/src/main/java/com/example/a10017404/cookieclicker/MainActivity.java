@@ -2,8 +2,10 @@ package com.example.a10017404.cookieclicker;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -12,6 +14,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     TextView plusone;
     AtomicInteger score;
+    volatile int total;
+    TextView cookies;
+    int grandpas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +33,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         img = (ImageView)findViewById(R.id.cookie);
         img.setImageResource(R.drawable.cookie);
+        cookies = (TextView)findViewById(R.id.cookies);
         relativeLayout = (RelativeLayout)findViewById(R.id.relative_layout);
-        relativeLayout.setBackgroundColor(Color.YELLOW);
+        grandpas=0;
         final ScaleAnimation scaleAnimation =  new ScaleAnimation(1f, 0.95f, 1f, 0.95f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(50);
+        final Thread OG = new Thread() {
+            public void run() {
+                try {
+                    total += 50;
+                    cookies.setText(String.valueOf(total));
+                    Thread.sleep(10);
+                    Toast.makeText(MainActivity.this, "HELLO", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.d("Thread","Thread didn't work");
+                }
+            }
+        };
+        if (total>=10) {
+            OG.start();
+        }
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 img.startAnimation(scaleAnimation);
                 final TextView plusone = new TextView(MainActivity.this);
+                total++;
+                cookies.setText(String.valueOf(total));
                 plusone.setText("+1");
                 plusone.setTextColor(Color.BLACK);
                 plusone.setTextSize(30.0f);
