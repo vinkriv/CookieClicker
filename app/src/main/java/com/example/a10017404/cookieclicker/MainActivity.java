@@ -22,10 +22,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView img;
     RelativeLayout relativeLayout;
     TextView plusone;
-    AtomicInteger score;
+    AtomicInteger grandpas;
     volatile int total;
     TextView cookies;
-    int grandpas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +34,22 @@ public class MainActivity extends AppCompatActivity {
         img.setImageResource(R.drawable.cookie);
         cookies = (TextView)findViewById(R.id.cookies);
         relativeLayout = (RelativeLayout)findViewById(R.id.relative_layout);
-        grandpas=0;
+        grandpas=1;
         final ScaleAnimation scaleAnimation =  new ScaleAnimation(1f, 0.95f, 1f, 0.95f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(50);
         final Thread OG = new Thread() {
             public void run() {
+                int num1 = grandpas.get();
+                total += num1*50;
+                cookies.setText(String.valueOf(total));
                 try {
-                    total += 50;
-                    cookies.setText(String.valueOf(total));
-                    Thread.sleep(10);
-                    Toast.makeText(MainActivity.this, "HELLO", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Log.d("Thread","Thread didn't work");
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };
-        if (total>=10) {
-            OG.start();
-        }
+        OG.start();
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override
