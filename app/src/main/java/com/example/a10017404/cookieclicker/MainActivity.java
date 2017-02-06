@@ -34,13 +34,12 @@ public class MainActivity extends AppCompatActivity {
         img.setImageResource(R.drawable.cookie);
         cookies = (TextView)findViewById(R.id.cookies);
         relativeLayout = (RelativeLayout)findViewById(R.id.relative_layout);
-        grandpas=1;
         final ScaleAnimation scaleAnimation =  new ScaleAnimation(1f, 0.95f, 1f, 0.95f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(50);
         final Thread OG = new Thread() {
             public void run() {
-                int num1 = grandpas.get();
-                total += num1*50;
+                //int num1 = grandpas.get();
+                total += 50;
                 cookies.setText(String.valueOf(total));
                 try {
                     Thread.sleep(1000);
