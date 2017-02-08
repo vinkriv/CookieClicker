@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.a10017404.cookieclicker.MainActivity"
     android:id="@+id/relative_layout"
-    android:background="#e1ffc249">
+    android:background="#ffd57a">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -25,7 +25,8 @@
         android:background="#ffaa00"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:adjustViewBounds="false" />
 
         <TextView
             android:layout_width="wrap_content"
