@@ -25,7 +25,31 @@
         android:background="#ffaa00"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"></RelativeLayout>
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gcount"
+            android:src="@drawable/grandpa"
+            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:id="@+id/textView"
+            android:layout_alignBottom="@+id/gcount"
+            android:layout_toRightOf="@+id/gcount"
+            android:layout_toEndOf="@+id/gcount"
+            android:visibility="invisible" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"

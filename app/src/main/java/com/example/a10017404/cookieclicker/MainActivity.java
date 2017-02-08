@@ -3,6 +3,8 @@ package com.example.a10017404.cookieclicker;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
+import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,15 +18,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
     ImageView img;
     RelativeLayout relativeLayout;
     TextView plusone;
-    AtomicInteger grandpas;
-    volatile int total;
+    AtomicInteger grandpas = new AtomicInteger(0);
+    AtomicInteger total = new AtomicInteger(0);
     TextView cookies;
+    int num1=0;
+    boolean check=false;
+    boolean grandpaonscr=false;
+
+    public class backgroundThread extends Thread{
+        public void run(){
+            total.getAndAdd(grandpas.intValue()*1);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,26 +53,38 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout = (RelativeLayout)findViewById(R.id.relative_layout);
         final ScaleAnimation scaleAnimation =  new ScaleAnimation(1f, 0.95f, 1f, 0.95f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(50);
-        final Thread OG = new Thread() {
-            public void run() {
-                //int num1 = grandpas.get();
-                total += 50;
-                cookies.setText(String.valueOf(total));
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        OG.start();
+        cookies.setText(String.valueOf(total));
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (total.intValue()>=9){
+                    if (grandpaonscr==false){
+                        grandpaonscr=true;
+                        final ImageView grandpa = new ImageView(MainActivity.this);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.addRule(RelativeLayout.ABOVE,R.id.cookie);
+                        params.addRule(RelativeLayout.ALIGN_LEFT,RelativeLayout.TRUE);
+                        grandpa.setImageResource(R.drawable.grandpa);
+                        relativeLayout.addView(grandpa,params);
+                        grandpa.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                relativeLayout.removeView(grandpa);
+                                grandpaonscr=false;
+                                total.getAndSet(total.intValue()-10);
+                                grandpas.getAndAdd(1);
+                                findViewById(R.id.gcount).setVisibility(View.VISIBLE);
+                                TextView count = (TextView)findViewById(R.id.textView);
+                                count.setVisibility(View.VISIBLE);
+                                count.setText(String.valueOf(grandpas.intValue()));
+                            }
+                        });
+                    }
+                }
                 img.startAnimation(scaleAnimation);
                 final TextView plusone = new TextView(MainActivity.this);
-                total++;
+                total.getAndAdd(1);
                 cookies.setText(String.valueOf(total));
                 plusone.setText("+1");
                 plusone.setTextColor(Color.BLACK);
@@ -92,4 +121,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
