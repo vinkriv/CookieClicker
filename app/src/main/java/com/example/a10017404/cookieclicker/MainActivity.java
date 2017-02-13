@@ -60,7 +60,6 @@ public class MainActivity extends Activity {
                         if (grandpas>9){
                             if (!grandpaonscr) {
                                 grandpaonscr = true;
-                                income+=2;
                                 createGrandpa();
                             }
                         }
@@ -90,8 +89,8 @@ public class MainActivity extends Activity {
                 background.start();
                 grandpaonscr=false;
                 total.getAndSet(total.intValue()-10);
-                income+=2;
                 grandpas++;
+                income+=2;
                 findViewById(R.id.gcount).setVisibility(View.VISIBLE);
                 TextView count = (TextView)findViewById(R.id.textView);
                 count.setVisibility(View.VISIBLE);
