@@ -42,11 +42,11 @@ public class MainActivity extends Activity {
     TextView cookies;
     boolean grandpaonscr=false;
     ImageView gcount;
+    int income=0;
 
     public class backgroundThread extends Thread{
         public void run(){
             while(grandpas>0){
-                int income=grandpas*2;
                 total.getAndAdd(income);
                 try{
                     Thread.sleep(1000);
@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
                         if (grandpas>9){
                             if (!grandpaonscr) {
                                 grandpaonscr = true;
+                                income+=2;
                                 createGrandpa();
                             }
                         }
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
                 background.start();
                 grandpaonscr=false;
                 total.getAndSet(total.intValue()-10);
+                income+=2;
                 grandpas++;
                 findViewById(R.id.gcount).setVisibility(View.VISIBLE);
                 TextView count = (TextView)findViewById(R.id.textView);
